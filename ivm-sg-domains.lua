@@ -1,8 +1,10 @@
-local ivm_sendgrid_envfromdomains = rspamd_config:add_map({
-  description = 'Invaluement Service Provider DNSBL: Sendgrid envelope domains',
-  type = 'set',
-  url = 'https://www.invaluement.com/spdata/sendgrid-envelopefromdomain-dnsbl.txt',
-})
+local lua_maps = require 'lua_maps'
+
+local ivm_sendgrid_envfromdomains = lua_maps.map_add_from_ucl(
+  'https://www.invaluement.com/spdata/sendgrid-envelopefromdomain-dnsbl.txt',
+  'set',
+  'Invaluement Service Provider DNSBL: Sendgrid envelope domains'
+)
 
 rspamd_config.IVM_SENDGRID_DOMAIN = {
   callback = function(task)

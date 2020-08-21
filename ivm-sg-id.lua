@@ -1,10 +1,11 @@
+local lua_maps = require 'lua_maps'
 local rspamd_regexp = require 'rspamd_regexp'
 
-local ivm_sendgrid_ids = rspamd_config:add_map({
-  description = 'Invaluement Service Provider DNSBL: Sendgrid IDs',
-  type = 'set',
-  url = 'https://www.invaluement.com/spdata/sendgrid-id-dnsbl.txt',
-})
+local ivm_sendgrid_ids = lua_maps.map_add_from_ucl(
+  'https://www.invaluement.com/spdata/sendgrid-id-dnsbl.txt',
+  'set',
+  'Invaluement Service Provider DNSBL: Sendgrid IDs'
+)
 
 rspamd_config.IVM_SENDGRID_ID = {
   callback = function(task)
