@@ -12,7 +12,7 @@ rspamd_config.IVM_SENDGRID_ID = {
     -- Workaround for missing original SMTP from, FIXME some time
     local tagged = task:get_symbol('TAGGED_FROM')
     if not tagged then return end
-    local env_from = task:get_from{'smtp', 'orig'}
+    local env_from = task:get_from('smtp')
     if not env_from then return end
     if env_from[1].domain ~= 'sendgrid.net' then return end
     if env_from[1].user ~= 'bounces' then return end
