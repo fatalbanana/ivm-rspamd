@@ -26,7 +26,7 @@ local cb_id = rspamd_config:register_symbol({
     if not env_from then return end
 
     -- Check normalised domain in domains list
-    if ivm_sendgrid_envfromdomains:get_key(rspamd_util.get_tld(env_from[1].domain)) then
+    if ivm_sendgrid_envfromdomains and ivm_sendgrid_envfromdomains:get_key(rspamd_util.get_tld(env_from[1].domain)) then
       task:insert_result('IVM_SENDGRID_DOMAIN', 1.0)
     end
 
@@ -34,7 +34,7 @@ local cb_id = rspamd_config:register_symbol({
     local lp_re = rspamd_regexp.create_cached([[^bounces\+(\d+)-]])
     local res = lp_re:search(env_from[1].user, true, true)
     if not res then return end
-    if ivm_sendgrid_ids:get_key(res[1][2]) then
+    if ivm_sendgrid_ids and ivm_sendgrid_ids:get_key(res[1][2]) then
       task:insert_result('IVM_SENDGRID_ID', 1.0)
     end
   end,
